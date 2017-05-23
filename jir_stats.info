@@ -1,0 +1,5 @@
+name = JIR Jobs Counter
+description = JIR Jobs counter by posting plans
+core = 7.x
+version = 7.x-0.1-dev
+package = JIR Custom

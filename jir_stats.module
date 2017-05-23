@@ -1,0 +1,101 @@
+<?php
+
+/**
+ *	@file
+ *	Custom functionality for a jir sms settings
+ */
+ 
+function jir_stats_block_info() {
+	$blocks['jir_stats'] = array(
+		'info' => t('JIR Jobs Counter'),
+	);
+	
+	$blocks['jir_realtime'] = array(
+		'info' => t('Realtime Figures'),
+	);
+	
+	$blocks['jir_copyright'] = array(
+		'info' => t('JIR Copyright'),
+	);
+	return $blocks;
+}
+/*
+function jir_stats_views_pre_render(&$view){
+	if ($view->name == 'all_jobs') {
+		$view->set_display('page_public');
+		dpm($view->result, "public view");
+	}
+}*/
+
+function jir_stats_block_view($delta = '') {
+  
+  //dpm(sizeof($view->result), 'puliiiic');
+  
+  $block = array();
+
+  switch ($delta) {
+    case 'jir_stats':
+		
+		$view = views_get_view('all_jobs');
+		$view->set_display('page_featured');
+		$view->preview('page_featured');
+		$featured = count($view->result);
+		
+		$view = views_get_view('all_jobs');
+		$view->set_display('page_jobs');
+		$view->preview('page_jobs');
+		$alljobs = count($view->result);
+		
+		$view = views_get_view('all_jobs');
+		$view->set_display('page_publicads');
+		$view->preview('page_publicads');
+		$publics = count($view->result);
+		
+		$view = views_get_view('all_jobs');
+		$view->set_display('page_tenders');
+		$view->preview('page_tenders');
+		$tenders = count($view->result);
+		
+		$view = views_get_view('all_jobs');
+		$view->set_display('page_internships');
+		$view->preview('page_internships');
+		$intern = count($view->result);
+		
+		$view = views_get_view('all_jobs');
+		$view->set_display('page_others');
+		$view->preview('page_others');
+		$others = count($view->result);
+		
+		$block['subject'] = t('JIR Jobs Counter');
+		$block['content'] = "<div style='display: none;'><span id='alljobsid'>".$alljobs."</span><span id='publicid'>".$publics."</span><span id='tendersid'>".$tenders."</span><span id='featuredid'>".$featured."</span><span id='internid'>".$intern."</span><span id='othersid'>".$others."</span></div>";
+		break;
+		
+	case 'jir_realtime':
+		$query = new EntityFieldQuery();
+		$query->entityCondition('entity_type', 'node')->entityCondition('bundle', 'employer')->propertyCondition('status', 1)->count();
+		$result = $query->execute();
+		$url = "http://search.jobinrwanda.com/api/stats";
+		$request = drupal_http_request($url);
+		$json_response = drupal_json_decode($request->data);
+		
+		$employers = number_format( $result , 0 , '.' , ',' );
+		$jobs_published = number_format( $json_response['totalJobs'] , 0 , '.' , ',' );
+		$registered_candidates = number_format( $json_response['totalApplications'] , 0 , '.' , ',' );
+		
+		$out = "<ul class='tick'><li style='font-size: 14px;'>".$employers." employers</li>";
+		$out.= "<li>".$jobs_published." jobs published since 2012</li>";
+		$out.="<li>".$registered_candidates." job candidates registered</li></ul>";
+		
+		$block['subject'] = t('Realtime Figures');
+		$block['content'] = $out;
+		break;
+	
+	case 'jir_copyright':
+		$year = date("Y");
+		$out = "<p>Copyright &copy ".$year." Job in Rwanda JIR Ltd. All Rights Reserved.<br /><a href='/content/job-rwanda-terms-use'>Terms of use</a> | <a href='/content/job-rwanda-privacy-policy'>Privacy policy</a> | <a href='/user'>Administration</a></p>";
+		$block['subject'] = t('JIR Copyright');
+		$block['content'] = $out;
+		break;
+  }
+  return $block;
+}
