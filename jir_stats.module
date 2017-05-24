@@ -19,13 +19,6 @@ function jir_stats_block_info() {
 	);
 	return $blocks;
 }
-/*
-function jir_stats_views_pre_render(&$view){
-	if ($view->name == 'all_jobs') {
-		$view->set_display('page_public');
-		dpm($view->result, "public view");
-	}
-}*/
 
 function jir_stats_block_view($delta = '') {
   
