@@ -27,17 +27,25 @@ function jir_stats_block_view($delta = '') {
   switch ($delta) {
     case 'jir_stats':
 
-    		$query = new EntityFieldQuery();
-    		$featured = $query->entityCondition('entity_type', 'node')
+    		$query1 = new EntityFieldQuery();
+    		$featured = $query1->entityCondition('entity_type', 'node')
 					->entityCondition('bundle', 'job')
 					->propertyCondition('status', NODE_PUBLISHED)
 					->fieldCondition('field_posting_type', 'tid', array(33, 34, 36), 'IN')
 					->count()->execute();
 
-				$alljobs = $query->entityCondition('entity_type', 'node')
+				$query2 = new EntityFieldQuery();
+				$alljobs = $query2->entityCondition('entity_type', 'node')
 					->entityCondition('bundle', 'job')
 					->propertyCondition('status', NODE_PUBLISHED)
 					->fieldCondition('field_offer_type', 'value', 'Job')
+					->count()->execute();
+
+				$query3 = new EntityFieldQuery();
+				$publics = $query3->entityCondition('entity_type', 'node')
+					->entityCondition('bundle', 'job')
+					->propertyCondition('status', NODE_PUBLISHED)
+					->fieldCondition('field_employer', 'field_employer_public_employer', TRUE)
 					->count()->execute();
 
 		$view = views_get_view('all_jobs');
@@ -53,7 +61,7 @@ function jir_stats_block_view($delta = '') {
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_publicads');
 		$view->preview('page_publicads');
-		$publics = count($view->result);
+//		$publics = count($view->result);
 		
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_tenders');
