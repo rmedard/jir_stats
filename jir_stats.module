@@ -34,6 +34,12 @@ function jir_stats_block_view($delta = '') {
 					->fieldCondition('field_posting_type', 'tid', array(33, 34, 36), 'IN')
 					->count()->execute();
 
+				$alljobs = $query->entityCondition('entity_type', 'node')
+					->entityCondition('bundle', 'job')
+					->propertyCondition('status', NODE_PUBLISHED)
+					->fieldCondition('field_offer_type', 'Job', '=')
+					->count()->execute();
+
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_featured');
 		$view->preview('page_featured');
@@ -42,7 +48,7 @@ function jir_stats_block_view($delta = '') {
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_jobs');
 		$view->preview('page_jobs');
-		$alljobs = count($view->result);
+//		$alljobs = count($view->result);
 		
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_publicads');
