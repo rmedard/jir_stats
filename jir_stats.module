@@ -21,19 +21,24 @@ function jir_stats_block_info() {
 }
 
 function jir_stats_block_view($delta = '') {
-  
-  //dpm(sizeof($view->result), 'puliiiic');
-  
+
   $block = array();
 
   switch ($delta) {
     case 'jir_stats':
-		
+
+    		$query = new EntityFieldQuery();
+    		$featured = $query->entityCondition('entity_type', 'node')
+					->entityCondition('bundle', 'job')
+					->propertyCondition('status', NODE_PUBLISHED)
+					->fieldCondition('field_posting_type', 'tid', 'IN', array(33, 34, 36))
+					->count()->execute();
+
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_featured');
 		$view->preview('page_featured');
-		$featured = count($view->result);
-		
+//		$featured = count($view->result);
+
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_jobs');
 		$view->preview('page_jobs');
