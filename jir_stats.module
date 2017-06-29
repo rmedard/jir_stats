@@ -31,7 +31,7 @@ function jir_stats_block_view($delta = '') {
     		$featured = $query->entityCondition('entity_type', 'node')
 					->entityCondition('bundle', 'job')
 					->propertyCondition('status', NODE_PUBLISHED)
-					->fieldCondition('field_posting_type', 'tid', 'IN', array(33, 34, 36))
+					->fieldCondition('field_posting_type', 'tid', array(33, 34, 36), 'IN')
 					->count()->execute();
 
 		$view = views_get_view('all_jobs');
