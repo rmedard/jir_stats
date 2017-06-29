@@ -62,49 +62,24 @@ function jir_stats_block_view($delta = '') {
 					->fieldCondition('field_offer_type', 'value', 'Other')
 					->count()->execute();
 
-				$query6 = new EntityFieldQuery();
-				$emps = $query6->entityCondition('entity_type', 'node')
-					->entityCondition('bundle', 'employer')
-					->propertyCondition('status', NODE_PUBLISHED)
-					->fieldCondition('field_employer_public_employer', 'value', 1)->execute();
-				$emps_ids = node_load_multiple(array_keys($emps['node']));
-
-				$query7 = new EntityFieldQuery();
-				$publics = $query7->entityCondition('entity_type', 'node')
-					->entityCondition('bundle', 'job')
-					->propertyCondition('status', NODE_PUBLISHED)
-					->fieldCondition('field_employer', 'nid', $emps_ids, 'IN')
-					->count()->execute();
-
-//		$view = views_get_view('all_jobs');
-//		$view->set_display('page_featured');
-//		$view->preview('page_featured');
-//		$featured = count($view->result);
-
-//		$view = views_get_view('all_jobs');
-//		$view->set_display('page_jobs');
-//		$view->preview('page_jobs');
-//		$alljobs = count($view->result);
+//				$query6 = new EntityFieldQuery();
+//				$emps = $query6->entityCondition('entity_type', 'node')
+//					->entityCondition('bundle', 'employer')
+//					->propertyCondition('status', NODE_PUBLISHED)
+//					->fieldCondition('field_employer_public_employer', 'value', 1)->execute();
+//				$emps_ids = node_load_multiple(array_keys($emps['node']));
+//
+//				$query7 = new EntityFieldQuery();
+//				$publics = $query7->entityCondition('entity_type', 'node')
+//					->entityCondition('bundle', 'job')
+//					->propertyCondition('status', NODE_PUBLISHED)
+//					->fieldCondition('field_employer', 'nid', $emps_ids, 'IN')
+//					->count()->execute();
 		
 		$view = views_get_view('all_jobs');
 		$view->set_display('page_publicads');
 		$view->preview('page_publicads');
-//		$publics = count($view->result);
-		
-//		$view = views_get_view('all_jobs');
-//		$view->set_display('page_tenders');
-//		$view->preview('page_tenders');
-//		$tenders = count($view->result);
-		
-//		$view = views_get_view('all_jobs');
-//		$view->set_display('page_internships');
-//		$view->preview('page_internships');
-//		$intern = count($view->result);
-		
-//		$view = views_get_view('all_jobs');
-//		$view->set_display('page_others');
-//		$view->preview('page_others');
-//		$others = count($view->result);
+		$publics = count($view->result);
 		
 		$block['subject'] = t('JIR Jobs Counter');
 		$block['content'] = "<div style='display: none;'><span id='alljobsid'>".$alljobs."</span><span id='publicid'>".$publics."</span><span id='tendersid'>".$tenders."</span><span id='featuredid'>".$featured."</span><span id='internid'>".$intern."</span><span id='othersid'>".$others."</span></div>";
