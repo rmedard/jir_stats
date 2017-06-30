@@ -68,22 +68,24 @@ function jir_stats_block_view($delta = '') {
 					->propertyCondition('status', NODE_PUBLISHED)
 					->fieldCondition('field_employer_public_employer', 'value', 1)->execute();
 
+				$publics = 0;
 				if (isset($emps['node'])){
 						$emps_ids = array_keys($emps['node']);
-						var_dump($emps_ids); die();
+//						var_dump($emps_ids); die();
+
+						$query7 = new EntityFieldQuery();
+						$publics = $query7->entityCondition('entity_type', 'node')
+							->entityCondition('bundle', 'job')
+							->propertyCondition('status', NODE_PUBLISHED)
+							->fieldCondition('field_employer', 'nid', $emps_ids, 'IN')
+							->count()->execute();
 				}
 
-//				$query7 = new EntityFieldQuery();
-//				$publics = $query7->entityCondition('entity_type', 'node')
-//					->entityCondition('bundle', 'job')
-//					->propertyCondition('status', NODE_PUBLISHED)
-//					->fieldCondition('field_employer', 'nid', $emps_ids, 'IN')
-//					->count()->execute();
 		
-		$view = views_get_view('all_jobs');
-		$view->set_display('page_publicads');
-		$view->preview('page_publicads');
-		$publics = count($view->result);
+//		$view = views_get_view('all_jobs');
+//		$view->set_display('page_publicads');
+//		$view->preview('page_publicads');
+//		$publics = count($view->result);
 		
 		$block['subject'] = t('JIR Jobs Counter');
 		$block['content'] = "<div style='display: none;'><span id='alljobsid'>".$alljobs."</span><span id='publicid'>".$publics."</span><span id='tendersid'>".$tenders."</span><span id='featuredid'>".$featured."</span><span id='internid'>".$intern."</span><span id='othersid'>".$others."</span></div>";
