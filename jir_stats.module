@@ -77,7 +77,7 @@ function jir_stats_block_view($delta = '') {
 						$publics = $query7->entityCondition('entity_type', 'node')
 							->entityCondition('bundle', 'job')
 							->propertyCondition('status', NODE_PUBLISHED)
-							->fieldCondition('field_employer', 'nid', $emps_ids, 'IN')
+							->fieldCondition('field_employer', 'target_id', $emps_ids, 'IN')
 							->count()->execute();
 				}
 
