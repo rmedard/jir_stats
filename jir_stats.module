@@ -67,8 +67,11 @@ function jir_stats_block_view($delta = '') {
 					->entityCondition('bundle', 'employer')
 					->propertyCondition('status', NODE_PUBLISHED)
 					->fieldCondition('field_employer_public_employer', 'value', 1)->execute();
-				$emps_ids = node_load_multiple(array_keys($emps['node']));
-var_dump($emps_ids); die();
+
+				if (isset($emps['node'])){
+						$emps_ids = array_keys($emps['node']);
+						var_dump($emps_ids); die();
+				}
 
 //				$query7 = new EntityFieldQuery();
 //				$publics = $query7->entityCondition('entity_type', 'node')
