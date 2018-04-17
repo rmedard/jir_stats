@@ -43,8 +43,8 @@ function jir_stats_block_view($delta = '')
                 ->fieldCondition('field_offer_type', 'value', 'Job')
                 ->count()->execute();
 
-            $query7 = new EntityFieldQuery();
-            $consultancy = $query7->entityCondition('entity_type', 'node')
+            $query8 = new EntityFieldQuery();
+            $consultancy = $query8->entityCondition('entity_type', 'node')
                 ->entityCondition('bundle', 'job')
                 ->propertyCondition('status', NODE_PUBLISHED)
                 ->fieldCondition('field_offer_type', 'value', 'Consultancy')
