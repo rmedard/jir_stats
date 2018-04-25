@@ -27,71 +27,6 @@ function jir_stats_block_view($delta = '')
     $block = array();
 
     switch ($delta) {
-        case 'jir_stats':
-
-            $query1 = new EntityFieldQuery();
-            $featured = $query1->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'job')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_posting_type', 'tid', array(33, 34, 36), 'IN')
-                ->count()->execute();
-
-            $query2 = new EntityFieldQuery();
-            $alljobs = $query2->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'job')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_offer_type', 'value', 'Job')
-                ->count()->execute();
-
-            $query8 = new EntityFieldQuery();
-            $consultancy = $query8->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'job')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_offer_type', 'value', 'Consultancy')
-                ->count()->execute();
-
-            $query3 = new EntityFieldQuery();
-            $tenders = $query3->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'job')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_offer_type', 'value', 'Tender')
-                ->count()->execute();
-
-            $query4 = new EntityFieldQuery();
-            $intern = $query4->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'job')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_offer_type', 'value', 'Internship')
-                ->count()->execute();
-
-            $query5 = new EntityFieldQuery();
-            $others = $query5->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'job')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_offer_type', 'value', 'Other')
-                ->count()->execute();
-
-            $query6 = new EntityFieldQuery();
-            $emps = $query6->entityCondition('entity_type', 'node')
-                ->entityCondition('bundle', 'employer')
-                ->propertyCondition('status', NODE_PUBLISHED)
-                ->fieldCondition('field_employer_public_employer', 'value', 1)->execute();
-
-            $publics = 0;
-            if (isset($emps['node'])) {
-                $emps_ids = array_keys($emps['node']);
-                $query7 = new EntityFieldQuery();
-                $publics = $query7->entityCondition('entity_type', 'node')
-                    ->entityCondition('bundle', 'job')
-                    ->propertyCondition('status', NODE_PUBLISHED)
-                    ->fieldCondition('field_employer', 'target_id', $emps_ids, 'IN')
-                    ->count()->execute();
-            }
-
-            $block['subject'] = t('JIR Jobs Counter');
-            $block['content'] = "<div style='display: none;'><span id='alljobsid'>" . $alljobs . "</span><span id='publicid'>" . $publics . "</span><span id='tendersid'>" . $tenders . "</span><span id='consultancyid'>" . $consultancy . "</span><span id='featuredid'>" . $featured . "</span><span id='internid'>" . $intern . "</span><span id='othersid'>" . $others . "</span></div>";
-            break;
-
         case 'jir_realtime':
             $query = new EntityFieldQuery();
             $query->entityCondition('entity_type', 'node')->entityCondition('bundle', 'employer')->propertyCondition('status', 1)->count();
@@ -104,9 +39,9 @@ function jir_stats_block_view($delta = '')
             $jobs_published = number_format($json_response['totalJobs'], 0, '.', ',');
             $registered_candidates = number_format($json_response['totalApplications'], 0, '.', ',');
 
-            $out = "<ul class='tick'><li style='font-size: 14px;'>" . $employers . " employers</li>";
-            $out .= "<li>" . $jobs_published . " jobs published since 2012</li>";
-            $out .= "<li>" . $registered_candidates . " job candidates registered</li></ul>";
+            $out = '<ul class="list-group"><li>' . $employers . 'employers</li>';
+            $out .= '<li class="list-group-item">' . $jobs_published . ' jobs published since 2012</li>';
+            $out .= '<li class="list-group-item">' . $registered_candidates . ' job candidates registered</li></ul>';
 
             $block['subject'] = t('Realtime Figures');
             $block['content'] = $out;
