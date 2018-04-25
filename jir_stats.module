@@ -39,7 +39,7 @@ function jir_stats_block_view($delta = '')
             $jobs_published = number_format($json_response['totalJobs'], 0, '.', ',');
             $registered_candidates = number_format($json_response['totalApplications'], 0, '.', ',');
 
-            $out = '<ul class="list-group"><li>' . $employers . 'employers</li>';
+            $out = '<ul class="list-group"><li class="list-group-item">' . $employers . 'employers</li>';
             $out .= '<li class="list-group-item">' . $jobs_published . ' jobs published since 2012</li>';
             $out .= '<li class="list-group-item">' . $registered_candidates . ' job candidates registered</li></ul>';
 
