@@ -64,6 +64,8 @@ function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
     if (arg(0) != 'admin'
         and $context['field']['type'] == 'entityreference') {
 
+        dpm($element);
+
         if (isset($element['target_id'])) {
             $element['target_id']['#element_validate'][] = 'nonEmptyEmployerReferenceValidator';
         } else {
