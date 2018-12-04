@@ -61,7 +61,10 @@ function jir_stats_block_view($delta = '')
  * Implements hook_field_widget_form_alter().
  */
 function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
-    if (arg(0) != 'admin' && $context['field']['type'] == 'entityreference') {
+    if (arg(0) != 'admin'
+        and $context['field']['type'] == 'entityreference'
+        and $element['#field_name'] == 'field_employer') {
+
         if (isset($element['target_id'])) {
             $element['target_id']['#element_validate'][] = 'nonEmptyEmployerReferenceValidator';
         } else {
@@ -72,7 +75,7 @@ function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
 
 function nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
 
-    dpm($element);
+    dpm($element['#value']);
 
     $valid = FALSE;
 
