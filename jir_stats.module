@@ -77,6 +77,6 @@ function _nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
     $valid = preg_match("'\w*\s\(\d{1,}\)$'", $element['#value']);
     if (!$valid) {
         form_set_error('field_employer', 'Invalid employer name.');
-        watchdog('error', t('Wrong employer name: @name', array('@name', $element['#value'])));
+        watchdog('error', t('Wrong employer name: ' . $element['#value']));
     }
 }
