@@ -63,10 +63,16 @@ function jir_stats_block_view($delta = '')
  */
 
 function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
+    /**
+     * Make sure we are not under admin path
+     */
     if (arg(0) != 'admin'
         and $context['field']['type'] == 'entityreference'
         and $context['field']['field_name'] == 'field_employer') {
 
+        /**
+         * Autocomplete may behave differently than other widgets, so we check that first
+         */
         if (isset($element['target_id'])) {
             $element['target_id']['#element_validate'][] = '_nonEmptyEmployerReferenceValidator';
         } else {
@@ -76,9 +82,14 @@ function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
 }
 
 function _nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
+
+    /**
+     * Check whether the value in Company name field matches e.g: abocdef (1234)
+     */
     $valid = preg_match("'\w*\s\(\d{1,}\)$'", $element['#value']);
     if (!$valid) {
         form_set_error('field_employer', 'Invalid employer name.');
-        watchdog('error', t('Fake job attempt. Wrong employer name: ' . $element['#value']));
+        watchdog('Fake Job', t('Fake job attempt. Wrong employer name: @name'),
+            array('name', $element['#value']), WATCHDOG_ERROR);
     }
 }
