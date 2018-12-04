@@ -75,6 +75,7 @@ function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
 function nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
 
     dpm($element);
+    dpm('Matches: ' . preg_match('\(\d{1,}\)$', $element['#value']));
 
     $valid = FALSE;
 
