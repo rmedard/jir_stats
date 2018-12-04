@@ -66,14 +66,14 @@ function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
         and $context['field']['field_name'] == 'field_employer') {
 
         if (isset($element['target_id'])) {
-            $element['target_id']['#element_validate'][] = 'nonEmptyEmployerReferenceValidator';
+            $element['target_id']['#element_validate'][] = '_nonEmptyEmployerReferenceValidator';
         } else {
-            $element['#element_validate'][] = 'nonEmptyEmployerReferenceValidator';
+            $element['#element_validate'][] = '_nonEmptyEmployerReferenceValidator';
         }
     }
 }
 
-function nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
+function _nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
     $valid = preg_match("'\w*\s\(\d{1,}\)$'", $element['#value']);
     if (!$valid) {
         form_set_error('field_employer', 'Invalid employer name.');
