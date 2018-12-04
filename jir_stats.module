@@ -57,9 +57,11 @@ function jir_stats_block_view($delta = '')
     return $block;
 }
 
+
 /**
  * Implements hook_field_widget_form_alter().
  */
+
 function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
     if (arg(0) != 'admin'
         and $context['field']['type'] == 'entityreference'
