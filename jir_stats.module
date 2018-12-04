@@ -73,11 +73,8 @@ function jir_stats_field_widget_form_alter(&$element, &$form_state, $context) {
 }
 
 function nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
-
     $valid = preg_match("'\w*\s\(\d{1,}\)$'", $element['#value']);
-
     if (!$valid) {
-        //form_error($form[$element['#field_employer']], t('Invalid employer name.'));
         form_set_error('field_employer', 'Invalid employer name.');
     }
 }
