@@ -86,7 +86,7 @@ function _nonEmptyEmployerReferenceValidator($element, &$form_state, $form) {
     /**
      * Check whether the value in Company name field is empty or matches e.g: abocdef (1234)
      */
-    $valid = empty($element['#value']) or preg_match("'\w*\s\(\d{1,}\)$'", $element['#value']);
+    $valid = preg_match("'\w*\s\(\d{1,}\)$'", $element['#value']);
     if ($valid == false) {
         form_set_error('field_employer', 'Invalid employer name.');
         watchdog('Fake Job', t('Fake job attempt. Wrong employer name: %name'),
