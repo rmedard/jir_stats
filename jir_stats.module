@@ -49,7 +49,8 @@ function jir_stats_block_view($delta = '')
 
         case 'jir_copyright':
             $year = date("Y");
-            $out = "<p>Copyright &copy " . $year . " Job in Rwanda JIR Ltd. All Rights Reserved.<br /><a href='/content/job-rwanda-terms-use'>Terms of use</a> | <a href='/content/job-rwanda-privacy-policy'>Privacy policy</a> | <a href='/user'>Administration</a></p>";
+            $site_name = filter_xss_admin(variable_get('site_name', 'Drupal'));
+            $out = "<p>Copyright &copy " . $year . " " . $site_name . " Ltd. All Rights Reserved.<br /><a href='/content/job-rwanda-terms-use'>Terms of use</a> | <a href='/content/job-rwanda-privacy-policy'>Privacy policy</a> | <a href='/user'>Administration</a></p>";
             $block['subject'] = t('JIR Copyright');
             $block['content'] = $out;
             break;
